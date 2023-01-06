@@ -5,6 +5,7 @@ import { useTheme } from '@mui/material/styles';
 import MainCard from 'ui-component/cards/MainCard';
 import { useContext, useState, useEffect } from 'react';
 import AnimateButton from 'ui-component/extended/AnimateButton';
+import { AuthContext } from '../../context/authContext/AuthContext';
 import { createProduct } from '../../context/productContext/apiCall';
 import { getCategorys } from '../../context/categoryContext/apiCall';
 import { ProductContext } from '../../context/productContext/ProductContext';
@@ -17,11 +18,13 @@ const NewProduct = () => {
     const navigate = useNavigate();
     const storage = getStorage(app);
     const [img, setImg] = useState(null);
+    const { user } = useContext(AuthContext);
     const [product, setProduct] = useState(null);
     const [uploaded, setUploaded] = useState(0);
     const { dispatch } = useContext(ProductContext);
     const [categoryList, setCategoryList] = useState([]);
     const { categorys, dispatch: dispatchCategory } = useContext(CategoryContext);
+    console.log(product);
 
     const ITEM_HEIGHT = 48;
     const ITEM_PADDING_TOP = 8;
@@ -40,7 +43,7 @@ const NewProduct = () => {
 
     const handleChange = (e) => {
         const value = e.target.value;
-        setProduct({ ...product, [e.target.name]: value });
+        setProduct({ userId: user?._id, ...product, [e.target.name]: value });
     };
 
     const handleSelect = (e) => {

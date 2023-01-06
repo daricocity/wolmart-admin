@@ -4,6 +4,7 @@ import { useTheme } from '@mui/material/styles';
 import MainCard from 'ui-component/cards/MainCard';
 import { useContext, useState } from 'react';
 import AnimateButton from 'ui-component/extended/AnimateButton';
+import { AuthContext } from '../../context/authContext/AuthContext';
 import { createCategory } from '../../context/categoryContext/apiCall';
 import { CategoryContext } from '../../context/categoryContext/CategoryContext';
 import { Grid, Button, Box, FormControl, InputLabel, OutlinedInput } from '@mui/material';
@@ -11,12 +12,13 @@ import { Grid, Button, Box, FormControl, InputLabel, OutlinedInput } from '@mui/
 const NewCategory = () => {
     const theme = useTheme();
     const navigate = useNavigate();
+    const { user } = useContext(AuthContext);
     const [category, setCategory] = useState(null);
     const { dispatch } = useContext(CategoryContext);
 
     const handleChange = (e) => {
         const value = e.target.value;
-        setCategory({ ...category, [e.target.name]: value });
+        setCategory({ userId: user._id, ...category, [e.target.name]: value });
     };
 
     const handleSubmit = (e) => {
@@ -24,7 +26,6 @@ const NewCategory = () => {
         createCategory(category, dispatch);
         navigate('/categorys');
     };
-
     return (
         <MainCard title="New Category" button>
             <MainCard title="Create Category">
@@ -43,13 +44,13 @@ const NewCategory = () => {
                                 />
                             </FormControl>
                             <FormControl fullWidth sx={{ ...theme.typography.customInput }}>
-                                <InputLabel htmlFor="outlined-adornment-genre-create">Description</InputLabel>
+                                <InputLabel htmlFor="outlined-adornment-desc-create">Description</InputLabel>
                                 <OutlinedInput
-                                    id="outlined-adornment-genre-create"
+                                    id="outlined-adornment-desc-create"
                                     type="text"
-                                    name="genre"
+                                    name="desc"
                                     onChange={handleChange}
-                                    label="genre"
+                                    label="desc"
                                     inputProps={{}}
                                 />
                             </FormControl>
