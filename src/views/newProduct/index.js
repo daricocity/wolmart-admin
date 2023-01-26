@@ -24,7 +24,6 @@ const NewProduct = () => {
     const { dispatch } = useContext(ProductContext);
     const [categoryList, setCategoryList] = useState([]);
     const { categorys, dispatch: dispatchCategory } = useContext(CategoryContext);
-    console.log(product);
 
     const ITEM_HEIGHT = 48;
     const ITEM_PADDING_TOP = 8;
@@ -154,9 +153,9 @@ const NewProduct = () => {
                                 <InputLabel id="content-readonly-label">Select Category</InputLabel>
                                 <Select
                                     labelId="content-readonly-label"
-                                    id="content"
-                                    label="content"
-                                    name="content"
+                                    id="categories"
+                                    label="categories"
+                                    name="categories"
                                     onChange={handleSelect}
                                     multiple
                                     value={categoryList}
